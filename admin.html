@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin – Service Requests | Sun Ro Systems</title>
+  <title>Admin Panel | Sun Ro Systems</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -16,16 +16,14 @@
     body { font-family: 'Inter', sans-serif; background: #f1f5f9; color: #1e293b; min-height: 100vh; }
 
     /* ===== LOGIN GATE ===== */
-    #loginGate {
-      min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    }
+    #loginGate { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
     .login-box {
       background: #fff; border-radius: 20px; padding: 48px 40px;
       box-shadow: var(--shadow); width: 100%; max-width: 380px; text-align: center;
     }
-    .login-box .logo { font-size: 2rem; margin-bottom: 6px; }
+    .login-box img { height: 72px; margin-bottom: 10px; }
     .login-box h2 { font-size: 1.4rem; font-weight: 800; color: var(--dark); margin-bottom: 4px; }
-    .login-box p { font-size: .9rem; color: var(--gray); margin-bottom: 28px; }
+    .login-box p  { font-size: .9rem; color: var(--gray); margin-bottom: 28px; }
     .login-box input {
       width: 100%; border: 1px solid #cbd5e1; border-radius: 10px;
       padding: 12px 14px; font-size: 1rem; font-family: inherit;
@@ -33,15 +31,13 @@
     }
     .login-box input:focus { border-color: var(--blue); background: #fff; }
     .login-box button {
-      width: 100%; background: var(--blue); color: #fff;
-      border: none; border-radius: 10px; padding: 13px;
-      font-size: 1rem; font-weight: 700; font-family: inherit;
-      cursor: pointer; transition: background .2s;
+      width: 100%; background: var(--blue); color: #fff; border: none;
+      border-radius: 10px; padding: 13px; font-size: 1rem; font-weight: 700;
+      font-family: inherit; cursor: pointer; transition: background .2s;
     }
     .login-box button:hover { background: var(--dark); }
     .login-error {
-      display: none; margin-top: 12px;
-      background: #fee2e2; color: #991b1b;
+      display: none; margin-top: 12px; background: #fee2e2; color: #991b1b;
       padding: 10px; border-radius: 8px; font-size: .9rem;
     }
 
@@ -49,135 +45,133 @@
     #dashboard { display: none; }
 
     .topbar {
-      background: var(--dark); color: #fff;
-      padding: 0 28px; height: 60px;
+      background: var(--dark); color: #fff; padding: 0 28px; height: 64px;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .topbar-brand { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; font-weight: 700; }
-    .topbar-brand span { font-size: 1.4rem; }
+    .topbar-brand { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; font-weight: 700; }
+    .topbar-brand img { height: 42px; width: auto; }
     .topbar-right { display: flex; align-items: center; gap: 16px; }
-    .topbar-right .badge-count {
-      background: var(--cyan); color: var(--dark);
-      padding: 3px 12px; border-radius: 999px; font-weight: 700; font-size: .85rem;
-    }
     .btn-logout {
       background: rgba(255,255,255,0.15); color: #fff;
-      border: 1px solid rgba(255,255,255,0.3);
-      padding: 6px 16px; border-radius: 8px; font-family: inherit;
-      cursor: pointer; font-size: .9rem; transition: background .2s;
+      border: 1px solid rgba(255,255,255,0.3); padding: 6px 16px;
+      border-radius: 8px; font-family: inherit; cursor: pointer;
+      font-size: .9rem; transition: background .2s;
     }
     .btn-logout:hover { background: rgba(255,255,255,0.25); }
 
-    .page-inner { max-width: 1200px; margin: 0 auto; padding: 32px 20px; }
+    .page-inner { max-width: 1280px; margin: 0 auto; padding: 28px 20px; }
 
-    /* Stats row */
+    /* ===== STATS ROW ===== */
     .stats-row {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 16px; margin-bottom: 28px;
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: 14px; margin-bottom: 24px;
     }
-    @media (max-width: 700px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 800px) { .stats-row { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 500px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
 
     .stat-card {
-      background: #fff; border-radius: 14px; padding: 20px 22px;
+      background: #fff; border-radius: 14px; padding: 18px 20px;
       box-shadow: var(--shadow); border-left: 4px solid var(--blue);
     }
-    .stat-card.pending  { border-color: #f59e0b; }
-    .stat-card.progress { border-color: #3b82f6; }
-    .stat-card.resolved { border-color: #22c55e; }
-    .stat-card .num { font-size: 2rem; font-weight: 800; color: var(--dark); }
-    .stat-card .lbl { font-size: .85rem; color: var(--gray); font-weight: 600; margin-top: 2px; }
+    .stat-card.svc   { border-color: #0077b6; }
+    .stat-card.enq   { border-color: #7c3aed; }
+    .stat-card.pend  { border-color: #f59e0b; }
+    .stat-card.prog  { border-color: #3b82f6; }
+    .stat-card.res   { border-color: #22c55e; }
+    .stat-card .num  { font-size: 1.9rem; font-weight: 800; color: var(--dark); }
+    .stat-card .lbl  { font-size: .82rem; color: var(--gray); font-weight: 600; margin-top: 2px; }
 
-    /* Controls */
+    /* ===== TABS ===== */
+    .tabs { display: flex; gap: 4px; margin-bottom: 20px; }
+    .tab-btn {
+      padding: 10px 22px; border-radius: 10px 10px 0 0;
+      border: none; font-family: inherit; font-size: .95rem; font-weight: 600;
+      cursor: pointer; background: #e2e8f0; color: var(--gray);
+      transition: background .2s, color .2s;
+    }
+    .tab-btn.active { background: #fff; color: var(--dark); box-shadow: 0 -2px 8px rgba(0,0,0,0.06); }
+    .tab-badge {
+      display: inline-block; background: var(--blue); color: #fff;
+      font-size: .72rem; font-weight: 700; padding: 1px 8px;
+      border-radius: 999px; margin-left: 6px; vertical-align: middle;
+    }
+    .tab-badge.enq-badge { background: #7c3aed; }
+
+    /* ===== CONTROLS ===== */
     .controls {
-      display: flex; align-items: center; gap: 12px;
-      margin-bottom: 20px; flex-wrap: wrap;
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px; flex-wrap: wrap;
     }
     .controls input {
-      flex: 1; min-width: 200px; border: 1px solid #cbd5e1;
-      border-radius: 10px; padding: 10px 14px; font-size: .95rem;
-      font-family: inherit; outline: none; background: #fff;
+      flex: 1; min-width: 200px; border: 1px solid #cbd5e1; border-radius: 10px;
+      padding: 10px 14px; font-size: .95rem; font-family: inherit;
+      outline: none; background: #fff;
     }
     .controls input:focus { border-color: var(--blue); }
     .controls select {
-      border: 1px solid #cbd5e1; border-radius: 10px;
-      padding: 10px 14px; font-size: .95rem; font-family: inherit;
-      outline: none; background: #fff; cursor: pointer;
+      border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 14px;
+      font-size: .95rem; font-family: inherit; outline: none;
+      background: #fff; cursor: pointer;
     }
-    .btn-clear-all {
-      background: #fee2e2; color: #991b1b;
-      border: none; border-radius: 10px;
-      padding: 10px 18px; font-size: .9rem; font-weight: 600;
-      font-family: inherit; cursor: pointer; transition: background .2s;
+    .btn-clear {
+      background: #fee2e2; color: #991b1b; border: none; border-radius: 10px;
+      padding: 10px 16px; font-size: .9rem; font-weight: 600;
+      font-family: inherit; cursor: pointer; transition: background .2s; white-space: nowrap;
     }
-    .btn-clear-all:hover { background: #fca5a5; }
+    .btn-clear:hover { background: #fca5a5; }
 
-    /* Table */
+    /* ===== TABLE ===== */
     .table-wrap { overflow-x: auto; }
-    table {
-      width: 100%; border-collapse: collapse;
-      background: #fff; border-radius: 14px;
-      overflow: hidden; box-shadow: var(--shadow);
-    }
+    table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); }
     thead { background: var(--dark); color: #fff; }
-    thead th {
-      padding: 14px 16px; text-align: left;
-      font-size: .85rem; font-weight: 600; letter-spacing: .3px;
-      white-space: nowrap;
-    }
+    thead th { padding: 13px 14px; text-align: left; font-size: .83rem; font-weight: 600; letter-spacing: .3px; white-space: nowrap; }
     tbody tr { border-bottom: 1px solid #f1f5f9; transition: background .15s; }
     tbody tr:last-child { border-bottom: none; }
     tbody tr:hover { background: #f8fafc; }
-    tbody td {
-      padding: 13px 16px; font-size: .88rem; color: #334155;
-      vertical-align: top;
-    }
+    tbody td { padding: 12px 14px; font-size: .86rem; color: #334155; vertical-align: top; }
     .td-name { font-weight: 700; color: var(--dark); }
     .td-phone a { color: var(--blue); text-decoration: none; }
     .td-phone a:hover { text-decoration: underline; }
     .td-date { white-space: nowrap; }
-    .td-desc { max-width: 180px; word-break: break-word; color: var(--gray); font-size: .83rem; }
+    .td-msg { max-width: 200px; word-break: break-word; color: var(--gray); font-size: .82rem; }
 
-    /* Status badge */
-    .status-badge {
-      display: inline-block; padding: 3px 12px;
-      border-radius: 999px; font-size: .78rem; font-weight: 700; white-space: nowrap;
-    }
-    .status-Pending  { background: #fef3c7; color: #92400e; }
-    .status-InProgress { background: #dbeafe; color: #1e40af; }
-    .status-Resolved { background: #dcfce7; color: #166534; }
+    /* Status badges */
+    .status-badge { display: inline-block; padding: 3px 11px; border-radius: 999px; font-size: .76rem; font-weight: 700; white-space: nowrap; }
+    .s-New        { background: #ede9fe; color: #5b21b6; }
+    .s-Pending    { background: #fef3c7; color: #92400e; }
+    .s-InProgress { background: #dbeafe; color: #1e40af; }
+    .s-Resolved   { background: #dcfce7; color: #166534; }
+    .s-Closed     { background: #f1f5f9; color: #64748b; }
 
     /* Action buttons */
-    .actions { display: flex; gap: 6px; flex-wrap: wrap; }
-    .btn-status {
-      border: none; border-radius: 7px; padding: 5px 11px;
-      font-size: .78rem; font-weight: 600; font-family: inherit;
+    .actions { display: flex; gap: 5px; flex-wrap: wrap; }
+    .btn-act {
+      border: none; border-radius: 7px; padding: 4px 10px;
+      font-size: .76rem; font-weight: 600; font-family: inherit;
       cursor: pointer; transition: opacity .2s;
     }
-    .btn-status:hover { opacity: .8; }
-    .btn-to-progress { background: #dbeafe; color: #1e40af; }
-    .btn-to-resolved { background: #dcfce7; color: #166534; }
-    .btn-to-pending  { background: #fef3c7; color: #92400e; }
-    .btn-delete { background: #fee2e2; color: #991b1b; }
+    .btn-act:hover { opacity: .8; }
+    .btn-new      { background: #ede9fe; color: #5b21b6; }
+    .btn-prog     { background: #dbeafe; color: #1e40af; }
+    .btn-res      { background: #dcfce7; color: #166534; }
+    .btn-close    { background: #f1f5f9; color: #64748b; }
+    .btn-del      { background: #fee2e2; color: #991b1b; }
 
     /* Empty state */
     .empty-state {
-      text-align: center; padding: 64px 20px;
-      background: #fff; border-radius: 14px; box-shadow: var(--shadow);
+      text-align: center; padding: 64px 20px; background: #fff;
+      border-radius: 14px; box-shadow: var(--shadow);
     }
-    .empty-state .empty-icon { font-size: 3rem; margin-bottom: 12px; }
+    .empty-state .ei { font-size: 3rem; margin-bottom: 12px; }
     .empty-state h3 { font-size: 1.2rem; color: var(--dark); margin-bottom: 6px; }
-    .empty-state p { font-size: .9rem; color: var(--gray); }
-    .empty-state a {
-      display: inline-block; margin-top: 18px;
-      background: var(--blue); color: #fff;
-      padding: 11px 24px; border-radius: 10px;
-      font-weight: 600; text-decoration: none; font-size: .95rem;
+    .empty-state p  { font-size: .9rem; color: var(--gray); }
+    .empty-state a  {
+      display: inline-block; margin-top: 18px; background: var(--blue); color: #fff;
+      padding: 11px 24px; border-radius: 10px; font-weight: 600;
+      text-decoration: none; font-size: .95rem;
     }
 
-    .back-link {
-      display: inline-block; margin-top: 24px;
-      color: var(--blue); font-size: .9rem; text-decoration: none;
-    }
+    .back-link { display: inline-block; margin-top: 24px; color: var(--blue); font-size: .9rem; text-decoration: none; }
     .back-link:hover { text-decoration: underline; }
   </style>
 </head>
@@ -186,10 +180,11 @@
   <!-- ===== LOGIN GATE ===== -->
   <div id="loginGate">
     <div class="login-box">
-      <div class="logo">💧</div>
+      <img src="logo.svg" alt="Sun Ro Systems" />
       <h2>Sun Ro Systems</h2>
-      <p>Admin Panel — Service Requests</p>
-      <input type="password" id="adminPass" placeholder="Enter admin password" onkeydown="if(event.key==='Enter') doLogin()" />
+      <p>Admin Panel — Enter password to continue</p>
+      <input type="password" id="adminPass" placeholder="Admin password"
+             onkeydown="if(event.key==='Enter') doLogin()" />
       <button onclick="doLogin()">Login</button>
       <div class="login-error" id="loginError">Incorrect password. Please try again.</div>
     </div>
@@ -199,66 +194,85 @@
   <div id="dashboard">
     <div class="topbar">
       <div class="topbar-brand">
-        <span>💧</span> Sun Ro Systems — Admin
+        <img src="logo.svg" alt="Sun Ro Systems" />
+        Admin Panel
       </div>
       <div class="topbar-right">
-        <span class="badge-count" id="totalCount">0 Requests</span>
         <button class="btn-logout" onclick="doLogout()">Logout</button>
       </div>
     </div>
 
     <div class="page-inner">
 
+      <!-- Stats -->
       <div class="stats-row">
-        <div class="stat-card">
-          <div class="num" id="statTotal">0</div>
-          <div class="lbl">Total Requests</div>
+        <div class="stat-card svc">
+          <div class="num" id="statSvc">0</div>
+          <div class="lbl">Service Requests</div>
         </div>
-        <div class="stat-card pending">
-          <div class="num" id="statPending">0</div>
-          <div class="lbl">Pending</div>
+        <div class="stat-card enq">
+          <div class="num" id="statEnq">0</div>
+          <div class="lbl">Enquiries</div>
         </div>
-        <div class="stat-card progress">
-          <div class="num" id="statProgress">0</div>
+        <div class="stat-card pend">
+          <div class="num" id="statPend">0</div>
+          <div class="lbl">Pending / New</div>
+        </div>
+        <div class="stat-card prog">
+          <div class="num" id="statProg">0</div>
           <div class="lbl">In Progress</div>
         </div>
-        <div class="stat-card resolved">
-          <div class="num" id="statResolved">0</div>
-          <div class="lbl">Resolved</div>
+        <div class="stat-card res">
+          <div class="num" id="statRes">0</div>
+          <div class="lbl">Resolved / Closed</div>
         </div>
       </div>
 
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab-btn active" id="tabSvcBtn" onclick="switchTab('svc')">
+          🔧 Service Requests <span class="tab-badge" id="badgeSvc">0</span>
+        </button>
+        <button class="tab-btn" id="tabEnqBtn" onclick="switchTab('enq')">
+          📩 Enquiries <span class="tab-badge enq-badge" id="badgeEnq">0</span>
+        </button>
+      </div>
+
+      <!-- Controls -->
       <div class="controls">
-        <input type="text" id="searchBox" placeholder="Search by name, phone, address..." oninput="renderTable()" />
-        <select id="filterStatus" onchange="renderTable()">
+        <input type="text" id="searchBox" placeholder="Search by name, phone…" oninput="renderActive()" />
+        <select id="filterStatus" onchange="renderActive()">
           <option value="">All Statuses</option>
           <option value="Pending">Pending</option>
+          <option value="New">New</option>
           <option value="In Progress">In Progress</option>
           <option value="Resolved">Resolved</option>
+          <option value="Closed">Closed</option>
         </select>
-        <button class="btn-clear-all" onclick="clearAll()">🗑 Clear All</button>
+        <button class="btn-clear" onclick="clearActive()">🗑 Clear All</button>
       </div>
 
       <div class="table-wrap" id="tableWrap"></div>
-
       <a href="index.html" class="back-link">← Back to Website</a>
     </div>
   </div>
 
   <script>
-    const PASS = 'sunro@2025';
-    const KEY  = 'sunro_service_requests';
+    const PASS     = 'sunro@2025';
+    const SVC_KEY  = 'sunro_service_requests';
+    const ENQ_KEY  = 'sunro_enquiries';
+    let activeTab  = 'svc';
 
+    /* ── Auth ── */
     function doLogin() {
       if (document.getElementById('adminPass').value === PASS) {
         document.getElementById('loginGate').style.display = 'none';
         document.getElementById('dashboard').style.display = 'block';
-        renderTable();
+        refreshAll();
       } else {
         document.getElementById('loginError').style.display = 'block';
       }
     }
-
     function doLogout() {
       document.getElementById('loginGate').style.display = 'flex';
       document.getElementById('dashboard').style.display = 'none';
@@ -266,119 +280,176 @@
       document.getElementById('loginError').style.display = 'none';
     }
 
-    function getData() {
-      return JSON.parse(localStorage.getItem(KEY) || '[]');
+    /* ── Data helpers ── */
+    function getSvc() { return JSON.parse(localStorage.getItem(SVC_KEY) || '[]'); }
+    function getEnq() { return JSON.parse(localStorage.getItem(ENQ_KEY) || '[]'); }
+    function saveSvc(d) { localStorage.setItem(SVC_KEY, JSON.stringify(d)); }
+    function saveEnq(d) { localStorage.setItem(ENQ_KEY, JSON.stringify(d)); }
+
+    /* ── Tab switch ── */
+    function switchTab(tab) {
+      activeTab = tab;
+      document.getElementById('tabSvcBtn').classList.toggle('active', tab === 'svc');
+      document.getElementById('tabEnqBtn').classList.toggle('active', tab === 'enq');
+      document.getElementById('searchBox').value = '';
+      document.getElementById('filterStatus').value = '';
+      renderActive();
+    }
+    function renderActive() { activeTab === 'svc' ? renderSvc() : renderEnq(); }
+
+    /* ── Stats refresh ── */
+    function refreshAll() {
+      const svc = getSvc(), enq = getEnq(), all = [...svc, ...enq];
+      document.getElementById('statSvc').textContent  = svc.length;
+      document.getElementById('statEnq').textContent  = enq.length;
+      document.getElementById('badgeSvc').textContent = svc.length;
+      document.getElementById('badgeEnq').textContent = enq.length;
+      document.getElementById('statPend').textContent =
+        all.filter(r => r.status === 'Pending' || r.status === 'New').length;
+      document.getElementById('statProg').textContent =
+        all.filter(r => r.status === 'In Progress').length;
+      document.getElementById('statRes').textContent  =
+        all.filter(r => r.status === 'Resolved' || r.status === 'Closed').length;
+      renderActive();
     }
 
-    function saveData(data) {
-      localStorage.setItem(KEY, JSON.stringify(data));
+    /* ── Status update & delete ── */
+    function updateSvcStatus(id, s) { saveSvc(getSvc().map(r => r.id===id ? {...r, status:s} : r)); refreshAll(); }
+    function updateEnqStatus(id, s) { saveEnq(getEnq().map(r => r.id===id ? {...r, status:s} : r)); refreshAll(); }
+    function deleteSvc(id) { if(!confirm('Delete this request?')) return; saveSvc(getSvc().filter(r=>r.id!==id)); refreshAll(); }
+    function deleteEnq(id) { if(!confirm('Delete this enquiry?')) return; saveEnq(getEnq().filter(r=>r.id!==id)); refreshAll(); }
+
+    function clearActive() {
+      const msg = activeTab==='svc' ? 'Delete ALL service requests?' : 'Delete ALL enquiries?';
+      if (!confirm(msg + ' This cannot be undone.')) return;
+      if (activeTab==='svc') localStorage.removeItem(SVC_KEY);
+      else localStorage.removeItem(ENQ_KEY);
+      refreshAll();
     }
 
-    function updateStatus(id, newStatus) {
-      const data = getData().map(r => r.id === id ? { ...r, status: newStatus } : r);
-      saveData(data);
-      renderTable();
-    }
-
-    function deleteRequest(id) {
-      if (!confirm('Delete this service request?')) return;
-      saveData(getData().filter(r => r.id !== id));
-      renderTable();
-    }
-
-    function clearAll() {
-      if (!confirm('Delete ALL service requests? This cannot be undone.')) return;
-      localStorage.removeItem(KEY);
-      renderTable();
-    }
-
-    function renderTable() {
+    /* ── Shared filter logic ── */
+    function filtered(all, fields) {
       const search = document.getElementById('searchBox').value.toLowerCase();
-      const filterStatus = document.getElementById('filterStatus').value;
-      const all = getData();
-
-      // Stats
-      document.getElementById('statTotal').textContent   = all.length;
-      document.getElementById('statPending').textContent  = all.filter(r => r.status === 'Pending').length;
-      document.getElementById('statProgress').textContent = all.filter(r => r.status === 'In Progress').length;
-      document.getElementById('statResolved').textContent = all.filter(r => r.status === 'Resolved').length;
-      document.getElementById('totalCount').textContent   = all.length + ' Request' + (all.length !== 1 ? 's' : '');
-
-      const filtered = all.filter(r => {
-        const matchSearch = !search ||
-          r.name.toLowerCase().includes(search) ||
-          r.phone.includes(search) ||
-          r.address.toLowerCase().includes(search) ||
-          r.problemType.toLowerCase().includes(search);
-        const matchStatus = !filterStatus || r.status === filterStatus;
-        return matchSearch && matchStatus;
+      const fs     = document.getElementById('filterStatus').value;
+      return all.filter(r => {
+        const matchS = !search || fields.some(f => String(r[f]||'').toLowerCase().includes(search));
+        const matchF = !fs || r.status === fs;
+        return matchS && matchF;
       });
+    }
 
+    /* ── Service Requests table ── */
+    function renderSvc() {
+      const all  = getSvc();
+      const rows = filtered(all, ['name','phone','address','problemType','email']);
       const wrap = document.getElementById('tableWrap');
 
-      if (filtered.length === 0) {
-        wrap.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-icon">📋</div>
-            <h3>${all.length === 0 ? 'No service requests yet' : 'No results found'}</h3>
-            <p>${all.length === 0 ? 'When customers submit a service request it will appear here.' : 'Try adjusting your search or filter.'}</p>
-            ${all.length === 0 ? '<a href="index.html#service">Go to Service Form</a>' : ''}
-          </div>`;
+      if (rows.length === 0) {
+        wrap.innerHTML = emptyState(all.length === 0,
+          'No service requests yet',
+          'When a customer submits a service request it will appear here.',
+          'index.html#service');
         return;
       }
 
-      const statusClass = s => s === 'In Progress' ? 'status-InProgress' : 'status-' + s;
-      const nextBtns = r => {
-        const btns = [];
-        if (r.status !== 'In Progress') btns.push(`<button class="btn-status btn-to-progress" onclick="updateStatus(${r.id}, 'In Progress')">In Progress</button>`);
-        if (r.status !== 'Resolved')    btns.push(`<button class="btn-status btn-to-resolved" onclick="updateStatus(${r.id}, 'Resolved')">Resolved</button>`);
-        if (r.status !== 'Pending')     btns.push(`<button class="btn-status btn-to-pending"  onclick="updateStatus(${r.id}, 'Pending')">Pending</button>`);
-        btns.push(`<button class="btn-status btn-delete" onclick="deleteRequest(${r.id})">Delete</button>`);
-        return btns.join('');
+      const sc = s => s.replace(' ','');
+      const btns = r => {
+        const b = [];
+        if (r.status !== 'In Progress') b.push(`<button class="btn-act btn-prog" onclick="updateSvcStatus(${r.id},'In Progress')">In Progress</button>`);
+        if (r.status !== 'Resolved')    b.push(`<button class="btn-act btn-res"  onclick="updateSvcStatus(${r.id},'Resolved')">Resolved</button>`);
+        if (r.status !== 'Pending')     b.push(`<button class="btn-act"           onclick="updateSvcStatus(${r.id},'Pending')" style="background:#fef3c7;color:#92400e">Pending</button>`);
+        b.push(`<button class="btn-act btn-del" onclick="deleteSvc(${r.id})">Delete</button>`);
+        return b.join('');
       };
 
       wrap.innerHTML = `
         <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Submitted</th>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Address</th>
-              <th>Machine</th>
-              <th>Problem</th>
-              <th>Pref. Date</th>
-              <th>Description</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+          <thead><tr>
+            <th>#</th><th>Date Submitted</th><th>Customer</th><th>Phone</th>
+            <th>Address</th><th>Machine</th><th>Problem</th>
+            <th>Pref. Date</th><th>Description</th><th>Status</th><th>Actions</th>
+          </tr></thead>
           <tbody>
-            ${filtered.map((r, i) => `
+            ${rows.map((r,i) => `
               <tr>
-                <td>${i + 1}</td>
-                <td class="td-date">${r.submittedAt}</td>
-                <td class="td-name">${escHtml(r.name)}<br/><small style="color:var(--gray);font-weight:400">${escHtml(r.email)}</small></td>
-                <td class="td-phone"><a href="tel:${r.phone}">${escHtml(r.phone)}</a></td>
-                <td>${escHtml(r.address)}</td>
-                <td>${escHtml(r.machineType)}<br/><small style="color:var(--gray)">${escHtml(r.model)}</small></td>
-                <td>${escHtml(r.problemType)}</td>
-                <td class="td-date">${r.preferredDate || '—'}</td>
-                <td class="td-desc">${escHtml(r.description)}</td>
-                <td><span class="status-badge ${statusClass(r.status)}">${r.status}</span></td>
-                <td><div class="actions">${nextBtns(r)}</div></td>
+                <td>${i+1}</td>
+                <td class="td-date">${h(r.submittedAt)}</td>
+                <td class="td-name">${h(r.name)}<br/><small style="color:var(--gray);font-weight:400">${h(r.email)}</small></td>
+                <td class="td-phone"><a href="tel:${r.phone}">${h(r.phone)}</a></td>
+                <td>${h(r.address)}</td>
+                <td>${h(r.machineType)}<br/><small style="color:var(--gray)">${h(r.model)}</small></td>
+                <td>${h(r.problemType)}</td>
+                <td class="td-date">${r.preferredDate||'—'}</td>
+                <td class="td-msg">${h(r.description)}</td>
+                <td><span class="status-badge s-${sc(r.status)}">${r.status}</span></td>
+                <td><div class="actions">${btns(r)}</div></td>
               </tr>`).join('')}
           </tbody>
         </table>`;
     }
 
-    function escHtml(str) {
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+    /* ── Enquiries table ── */
+    function renderEnq() {
+      const all  = getEnq();
+      const rows = filtered(all, ['name','phone','email','enquiryType','message']);
+      const wrap = document.getElementById('tableWrap');
+
+      if (rows.length === 0) {
+        wrap.innerHTML = emptyState(all.length === 0,
+          'No enquiries yet',
+          'When a customer submits the contact form it will appear here.',
+          'index.html#contact');
+        return;
+      }
+
+      const sc = s => s.replace(' ','');
+      const btns = r => {
+        const b = [];
+        if (r.status !== 'In Progress') b.push(`<button class="btn-act btn-prog"  onclick="updateEnqStatus(${r.id},'In Progress')">In Progress</button>`);
+        if (r.status !== 'Resolved')    b.push(`<button class="btn-act btn-res"   onclick="updateEnqStatus(${r.id},'Resolved')">Resolved</button>`);
+        if (r.status !== 'Closed')      b.push(`<button class="btn-act btn-close" onclick="updateEnqStatus(${r.id},'Closed')">Close</button>`);
+        if (r.status !== 'New')         b.push(`<button class="btn-act btn-new"   onclick="updateEnqStatus(${r.id},'New')" style="background:#ede9fe;color:#5b21b6">New</button>`);
+        b.push(`<button class="btn-act btn-del" onclick="deleteEnq(${r.id})">Delete</button>`);
+        return b.join('');
+      };
+
+      wrap.innerHTML = `
+        <table>
+          <thead><tr>
+            <th>#</th><th>Date Submitted</th><th>Customer</th><th>Phone</th>
+            <th>Email</th><th>Enquiry Type</th><th>Message</th>
+            <th>Status</th><th>Actions</th>
+          </tr></thead>
+          <tbody>
+            ${rows.map((r,i) => `
+              <tr>
+                <td>${i+1}</td>
+                <td class="td-date">${h(r.submittedAt)}</td>
+                <td class="td-name">${h(r.name)}</td>
+                <td class="td-phone"><a href="tel:${r.phone}">${h(r.phone)}</a></td>
+                <td><a href="mailto:${r.email}" style="color:var(--blue);text-decoration:none">${h(r.email)}</a></td>
+                <td>${h(r.enquiryType)}</td>
+                <td class="td-msg">${h(r.message)}</td>
+                <td><span class="status-badge s-${sc(r.status)}">${r.status}</span></td>
+                <td><div class="actions">${btns(r)}</div></td>
+              </tr>`).join('')}
+          </tbody>
+        </table>`;
+    }
+
+    function emptyState(isEmpty, title, desc, link) {
+      return `<div class="empty-state">
+        <div class="ei">${isEmpty ? '📋' : '🔍'}</div>
+        <h3>${isEmpty ? title : 'No results found'}</h3>
+        <p>${isEmpty ? desc : 'Try adjusting your search or filter.'}</p>
+        ${isEmpty ? `<a href="${link}">Go to Form</a>` : ''}
+      </div>`;
+    }
+
+    function h(str) {
+      return String(str||'')
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
   </script>
 </body>

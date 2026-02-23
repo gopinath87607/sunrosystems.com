@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <defs>
+    <!-- Top arc for "SUN RO SYSTEMS" text -->
+    <path id="topArc"    d="M 22,120 A 98,98 0 0,1 218,120"/>
+    <!-- Bottom arc for "WATER PURIFIERS" text -->
+    <path id="bottomArc" d="M 48,172 A 74,74 0 0,0 192,172"/>
+  </defs>
+
+  <!-- Outer filled ring (dark blue) -->
+  <circle cx="120" cy="120" r="118" fill="#03045e"/>
+  <!-- White ring gap -->
+  <circle cx="120" cy="120" r="111" fill="#ffffff"/>
+  <!-- Inner light background -->
+  <circle cx="120" cy="120" r="107" fill="#eaf6fb"/>
+  <!-- Inner ring border -->
+  <circle cx="120" cy="120" r="107" fill="none" stroke="#03045e" stroke-width="1.5"/>
+
+  <!-- ── Top curved text: SUN RO SYSTEMS ── -->
+  <text font-family="Arial Black, Arial, sans-serif" font-size="14.5"
+        font-weight="900" fill="#03045e" letter-spacing="3.5">
+    <textPath href="#topArc" startOffset="50%" text-anchor="middle">
+      SUN RO SYSTEMS
+    </textPath>
+  </text>
+
+  <!-- ── Decorative dots either side of top text ── -->
+  <circle cx="30"  cy="108" r="3" fill="#0077b6"/>
+  <circle cx="210" cy="108" r="3" fill="#0077b6"/>
+
+  <!-- ── Horizontal centre divider ── -->
+  <line x1="18" y1="124" x2="222" y2="124" stroke="#03045e" stroke-width="2"/>
+
+  <!-- ── LEFT GLOBE ── -->
+  <g transform="translate(52,112)">
+    <circle r="18" fill="none" stroke="#0077b6" stroke-width="1.8"/>
+    <ellipse rx="10" ry="18" fill="none" stroke="#0077b6" stroke-width="1.4"/>
+    <line x1="-18" y1="0"  x2="18"  y2="0"  stroke="#0077b6" stroke-width="1"/>
+    <line x1="-17" y1="-8" x2="17"  y2="-8" stroke="#0077b6" stroke-width="0.8"/>
+    <line x1="-17" y1="8"  x2="17"  y2="8"  stroke="#0077b6" stroke-width="0.8"/>
+  </g>
+
+  <!-- ── RIGHT GLOBE ── -->
+  <g transform="translate(188,112)">
+    <circle r="18" fill="none" stroke="#0077b6" stroke-width="1.8"/>
+    <ellipse rx="10" ry="18" fill="none" stroke="#0077b6" stroke-width="1.4"/>
+    <line x1="-18" y1="0"  x2="18"  y2="0"  stroke="#0077b6" stroke-width="1"/>
+    <line x1="-17" y1="-8" x2="17"  y2="-8" stroke="#0077b6" stroke-width="0.8"/>
+    <line x1="-17" y1="8"  x2="17"  y2="8"  stroke="#0077b6" stroke-width="0.8"/>
+  </g>
+
+  <!-- ── CENTRE WATER DROP ── -->
+  <path d="M120,60 C120,60 94,92 94,108 C94,122 106,133 120,133
+           C134,133 146,122 146,108 C146,92 120,60 120,60 Z"
+        fill="#00b4d8"/>
+  <!-- Shine on drop -->
+  <ellipse cx="112" cy="95" rx="5" ry="8" fill="white" opacity="0.35"
+           transform="rotate(-20,112,95)"/>
+
+  <!-- ── MINERAL RO text ── -->
+  <text x="120" y="152" font-family="Arial Black, Arial, sans-serif"
+        font-size="13.5" font-weight="900" fill="#03045e"
+        text-anchor="middle" letter-spacing="2">MINERAL RO</text>
+
+  <!-- ── Small decorative drops either side ── -->
+  <path d="M72,162 C72,162 67,168 67,172 C67,175.3 69.2,177 72,177
+           C74.8,177 77,175.3 77,172 C77,168 72,162 72,162 Z"
+        fill="#00b4d8"/>
+  <path d="M168,162 C168,162 163,168 163,172 C163,175.3 165.2,177 168,177
+           C170.8,177 173,175.3 173,172 C173,168 168,162 168,162 Z"
+        fill="#00b4d8"/>
+
+  <!-- ── Bottom curved text: WATER PURIFIERS ── -->
+  <text font-family="Arial, sans-serif" font-size="12"
+        font-weight="700" fill="#0077b6" letter-spacing="2">
+    <textPath href="#bottomArc" startOffset="50%" text-anchor="middle">
+      WATER PURIFIERS
+    </textPath>
+  </text>
+</svg>

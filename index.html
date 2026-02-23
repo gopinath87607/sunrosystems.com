@@ -15,7 +15,7 @@
   <header class="navbar">
     <div class="container nav-inner">
       <a href="#" class="logo">
-        <img src="logo.png" alt="Sun Ro Systems" class="logo-img" />
+        <img src="logo.svg" alt="Sun Ro Systems" class="logo-img" />
       </a>
       <nav class="nav-links">
         <a href="#home">Home</a>
@@ -389,7 +389,7 @@
   <footer class="footer">
     <div class="container footer-inner">
       <div class="footer-brand">
-        <img src="logo.png" alt="Sun Ro Systems" class="footer-logo-img" />
+        <img src="logo.svg" alt="Sun Ro Systems" class="footer-logo-img" />
         <p>Pure Water, Pure Life.<br />Your trusted RO water purifier partner.</p>
       </div>
       <div class="footer-links">
@@ -429,6 +429,19 @@
 
     function handleSubmit(e) {
       e.preventDefault();
+      const enquiry = {
+        id: Date.now(),
+        submittedAt: new Date().toLocaleString('en-IN'),
+        name: document.getElementById('name').value,
+        phone: document.getElementById('phone').value,
+        email: document.getElementById('email').value || '—',
+        enquiryType: document.getElementById('enquiry').value || '—',
+        message: document.getElementById('message').value || '—',
+        status: 'New'
+      };
+      const existing = JSON.parse(localStorage.getItem('sunro_enquiries') || '[]');
+      existing.unshift(enquiry);
+      localStorage.setItem('sunro_enquiries', JSON.stringify(existing));
       document.getElementById('formSuccess').style.display = 'block';
       e.target.reset();
       setTimeout(() => {
