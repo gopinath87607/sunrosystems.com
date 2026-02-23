@@ -16,6 +16,7 @@
     <div class="container nav-inner">
       <a href="#" class="logo">
         <img src="logo.svg" alt="Sun Ro Systems" class="logo-img" />
+        <span class="logo-text">Sun Ro <strong>Systems</strong></span>
       </a>
       <nav class="nav-links">
         <a href="#home">Home</a>
@@ -200,6 +201,9 @@
             <label for="svc-desc">Problem Description</label>
             <textarea id="svc-desc" rows="3" placeholder="Describe the issue in more detail (optional)..."></textarea>
           </div>
+          <!-- honeypot: hidden from humans, filled by bots -->
+          <input type="text" id="hp-svc" name="company" tabindex="-1" autocomplete="off"
+                 aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;" />
           <button type="submit" class="btn-primary full-width">Submit Service Request</button>
           <div class="form-success" id="svcSuccess">
             ✅ Service request submitted! Our technician will contact you within 24 hours.
@@ -342,6 +346,9 @@
             <label for="message">Message</label>
             <textarea id="message" rows="4" placeholder="Tell us more about your requirement..."></textarea>
           </div>
+          <!-- honeypot: hidden from humans, filled by bots -->
+          <input type="text" id="hp-enq" name="company" tabindex="-1" autocomplete="off"
+                 aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;" />
           <button type="submit" class="btn-primary full-width">Send Enquiry</button>
           <div class="form-success" id="formSuccess">
             ✅ Thank you! We'll contact you within 2 hours.
@@ -427,8 +434,27 @@
       menu.classList.toggle('open');
     }
 
+    /* ── Bot protection helpers ── */
+    function isBot(honeypotId) {
+      return document.getElementById(honeypotId).value.length > 0;
+    }
+    function rateLimitOk(key) {
+      const now = Date.now(), window = 15 * 60 * 1000, max = 3;
+      const times = JSON.parse(localStorage.getItem(key) || '[]')
+                      .filter(t => now - t < window);
+      if (times.length >= max) return false;
+      times.push(now);
+      localStorage.setItem(key, JSON.stringify(times));
+      return true;
+    }
+
     function handleSubmit(e) {
       e.preventDefault();
+      if (isBot('hp-enq')) return;
+      if (!rateLimitOk('sunro_enq_rate')) {
+        alert('Too many submissions. Please wait 15 minutes before trying again.');
+        return;
+      }
       const enquiry = {
         id: Date.now(),
         submittedAt: new Date().toLocaleString('en-IN'),
@@ -451,6 +477,11 @@
 
     function handleServiceSubmit(e) {
       e.preventDefault();
+      if (isBot('hp-svc')) return;
+      if (!rateLimitOk('sunro_svc_rate')) {
+        alert('Too many submissions. Please wait 15 minutes before trying again.');
+        return;
+      }
       const request = {
         id: Date.now(),
         submittedAt: new Date().toLocaleString('en-IN'),
