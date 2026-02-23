@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Sunro Systems – Premium RO Water Purifiers for Home & Commercial use. Pure Water, Pure Life." />
-  <title>Sunro Systems | RO Water Purifiers</title>
+  <meta name="description" content="Sun Ro Systems – Premium RO Water Purifiers for Home &amp; Commercial use. Pure Water, Pure Life." />
+  <title>Sun Ro Systems | RO Water Purifiers</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
@@ -16,11 +16,12 @@
     <div class="container nav-inner">
       <a href="#" class="logo">
         <span class="logo-drop">💧</span>
-        <span class="logo-text">Sunro <strong>Systems</strong></span>
+        <span class="logo-text">Sun Ro <strong>Systems</strong></span>
       </a>
       <nav class="nav-links">
         <a href="#home">Home</a>
         <a href="#products">Products</a>
+        <a href="#service">Service</a>
         <a href="#why-us">Why Us</a>
         <a href="#about">About</a>
         <a href="#contact" class="btn-nav">Contact Us</a>
@@ -30,6 +31,7 @@
     <div class="mobile-menu" id="mobileMenu">
       <a href="#home" onclick="toggleMenu()">Home</a>
       <a href="#products" onclick="toggleMenu()">Products</a>
+      <a href="#service" onclick="toggleMenu()">Service</a>
       <a href="#why-us" onclick="toggleMenu()">Why Us</a>
       <a href="#about" onclick="toggleMenu()">About</a>
       <a href="#contact" onclick="toggleMenu()">Contact</a>
@@ -44,7 +46,7 @@
       <h1>Pure Water,<br /><span class="accent">Pure Life.</span></h1>
       <p>Advanced RO water purification systems for homes, offices, and industries. Clean water is not a luxury — it's your right.</p>
       <div class="hero-cta">
-        <a href="#contact" class="btn-primary">Get Free Demo</a>
+        <a href="#service" class="btn-primary">Book a Service</a>
         <a href="#products" class="btn-outline">Explore Products</a>
       </div>
     </div>
@@ -123,7 +125,110 @@
             <li>Priority support</li>
             <li>Free inspection visits</li>
           </ul>
-          <a href="#contact" class="btn-card">Enquire Now</a>
+          <a href="#service" class="btn-card">Book Service</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICE REQUEST ===== -->
+  <section class="service-request" id="service">
+    <div class="container">
+      <div class="section-header">
+        <h2>Book a <span class="accent">Service</span></h2>
+        <p>Fill in your details below and our certified technician will reach you within 24 hours.</p>
+      </div>
+      <div class="service-wrap">
+
+        <form class="service-form" onsubmit="handleServiceSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="svc-name">Full Name *</label>
+              <input type="text" id="svc-name" placeholder="Your name" required />
+            </div>
+            <div class="form-group">
+              <label for="svc-phone">Phone Number *</label>
+              <input type="tel" id="svc-phone" placeholder="+91 98765 43210" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="svc-email">Email Address</label>
+              <input type="email" id="svc-email" placeholder="you@example.com" />
+            </div>
+            <div class="form-group">
+              <label for="svc-date">Preferred Date *</label>
+              <input type="date" id="svc-date" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="svc-address">Full Address *</label>
+            <input type="text" id="svc-address" placeholder="House no., Street, City, PIN code" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="svc-machine">Machine Type *</label>
+              <select id="svc-machine" required>
+                <option value="">Select machine type</option>
+                <option>Home RO System</option>
+                <option>Commercial RO System</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="svc-model">Machine Model</label>
+              <input type="text" id="svc-model" placeholder="e.g. Kent Grand Plus" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="svc-problem">Problem Type *</label>
+            <select id="svc-problem" required>
+              <option value="">Select problem</option>
+              <option>No Water Output</option>
+              <option>Low Water Flow</option>
+              <option>Bad Taste / Smell</option>
+              <option>Water Leakage</option>
+              <option>Unusual Noise</option>
+              <option>Filter Replacement</option>
+              <option>General Service / Maintenance</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="svc-desc">Problem Description</label>
+            <textarea id="svc-desc" rows="3" placeholder="Describe the issue in more detail (optional)..."></textarea>
+          </div>
+          <button type="submit" class="btn-primary full-width">Submit Service Request</button>
+          <div class="form-success" id="svcSuccess">
+            ✅ Service request submitted! Our technician will contact you within 24 hours.
+          </div>
+        </form>
+
+        <div class="service-info">
+          <div class="svc-highlight">
+            <div class="svc-icon">⚡</div>
+            <h4>Quick Response</h4>
+            <p>Our technicians reach you within 24 hours of booking.</p>
+          </div>
+          <div class="svc-highlight">
+            <div class="svc-icon">✅</div>
+            <h4>Certified Technicians</h4>
+            <p>All our service engineers are factory-trained and certified.</p>
+          </div>
+          <div class="svc-highlight">
+            <div class="svc-icon">💰</div>
+            <h4>Transparent Pricing</h4>
+            <p>No hidden charges — get a clear quote before any work begins.</p>
+          </div>
+          <div class="svc-highlight">
+            <div class="svc-icon">📋</div>
+            <h4>Service Warranty</h4>
+            <p>30-day warranty on all parts replaced and work done.</p>
+          </div>
+          <div class="svc-admin-link">
+            <a href="admin.html" class="btn-admin">📊 View All Service Requests</a>
+          </div>
         </div>
 
       </div>
@@ -134,7 +239,7 @@
   <section class="why-us" id="why-us">
     <div class="container">
       <div class="section-header">
-        <h2>Why Choose <span class="accent">Sunro Systems?</span></h2>
+        <h2>Why Choose <span class="accent">Sun Ro Systems?</span></h2>
         <p>We don't just sell purifiers — we deliver peace of mind with every drop.</p>
       </div>
       <div class="features-grid">
@@ -185,8 +290,8 @@
         </div>
       </div>
       <div class="about-text">
-        <h2>About <span class="accent">Sunro Systems</span></h2>
-        <p>Founded in 2015, Sunro Systems has been on a mission to make safe, clean drinking water accessible to every household and business. We are a team of passionate engineers and service professionals committed to water quality.</p>
+        <h2>About <span class="accent">Sun Ro Systems</span></h2>
+        <p>Founded in 2015, Sun Ro Systems has been on a mission to make safe, clean drinking water accessible to every household and business. We are a team of passionate engineers and service professionals committed to water quality.</p>
         <p>From a single city to a growing network of service centres, we have installed over 10,000 purification systems and built lasting relationships with families, restaurants, hospitals, and factories.</p>
         <p>Our after-sales service is what sets us apart — we believe the relationship begins after the sale, not before it.</p>
         <div class="about-highlights">
@@ -247,7 +352,7 @@
           <div class="info-item">
             <span class="info-icon">📍</span>
             <div>
-              <strong>Sunro Systems</strong><br />
+              <strong>Sun Ro Systems</strong><br />
               123, Water Street, Industrial Area,<br />
               Your City – 000000
             </div>
@@ -270,7 +375,7 @@
             <div>Mon – Sat: 9:00 AM – 7:00 PM<br />Sun: 10:00 AM – 4:00 PM</div>
           </div>
           <div class="whatsapp-btn">
-            <a href="https://wa.me/919876543210?text=Hi%20Sunro%20Systems%2C%20I%20need%20help%20with%20my%20RO%20purifier." target="_blank" rel="noopener">
+            <a href="https://wa.me/919876543210?text=Hi%20Sun%20Ro%20Systems%2C%20I%20need%20help%20with%20my%20RO%20purifier." target="_blank" rel="noopener">
               💬 Chat on WhatsApp
             </a>
           </div>
@@ -284,13 +389,14 @@
     <div class="container footer-inner">
       <div class="footer-brand">
         <span class="logo-drop">💧</span>
-        <span class="logo-text">Sunro <strong>Systems</strong></span>
+        <span class="logo-text">Sun Ro <strong>Systems</strong></span>
         <p>Pure Water, Pure Life.<br />Your trusted RO water purifier partner.</p>
       </div>
       <div class="footer-links">
         <h4>Quick Links</h4>
         <a href="#home">Home</a>
         <a href="#products">Products</a>
+        <a href="#service">Service</a>
         <a href="#why-us">Why Us</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
@@ -311,7 +417,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2025 Sunro Systems. All rights reserved. | Designed with 💧 for clean water.</p>
+      <p>&copy; 2025 Sun Ro Systems. All rights reserved. | Designed with 💧 for clean water.</p>
     </div>
   </footer>
 
@@ -328,6 +434,32 @@
       setTimeout(() => {
         document.getElementById('formSuccess').style.display = 'none';
       }, 5000);
+    }
+
+    function handleServiceSubmit(e) {
+      e.preventDefault();
+      const request = {
+        id: Date.now(),
+        submittedAt: new Date().toLocaleString('en-IN'),
+        name: document.getElementById('svc-name').value,
+        phone: document.getElementById('svc-phone').value,
+        email: document.getElementById('svc-email').value || '—',
+        address: document.getElementById('svc-address').value,
+        preferredDate: document.getElementById('svc-date').value,
+        machineType: document.getElementById('svc-machine').value,
+        model: document.getElementById('svc-model').value || '—',
+        problemType: document.getElementById('svc-problem').value,
+        description: document.getElementById('svc-desc').value || '—',
+        status: 'Pending'
+      };
+      const existing = JSON.parse(localStorage.getItem('sunro_service_requests') || '[]');
+      existing.unshift(request);
+      localStorage.setItem('sunro_service_requests', JSON.stringify(existing));
+      document.getElementById('svcSuccess').style.display = 'block';
+      e.target.reset();
+      setTimeout(() => {
+        document.getElementById('svcSuccess').style.display = 'none';
+      }, 6000);
     }
 
     // Smooth scroll for all anchor links
@@ -348,7 +480,7 @@
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.product-card, .feature, .stat, .about-inner').forEach(el => {
+    document.querySelectorAll('.product-card, .feature, .stat, .about-inner, .svc-highlight').forEach(el => {
       el.classList.add('reveal');
       observer.observe(el);
     });

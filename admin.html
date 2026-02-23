@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin – Service Requests | Sun Ro Systems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue: #0077b6; --cyan: #00b4d8; --dark: #03045e;
+      --pale: #f0f9ff; --gray: #64748b; --white: #fff;
+      --shadow: 0 4px 24px rgba(0,119,182,0.10);
+    }
+    body { font-family: 'Inter', sans-serif; background: #f1f5f9; color: #1e293b; min-height: 100vh; }
+
+    /* ===== LOGIN GATE ===== */
+    #loginGate {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    }
+    .login-box {
+      background: #fff; border-radius: 20px; padding: 48px 40px;
+      box-shadow: var(--shadow); width: 100%; max-width: 380px; text-align: center;
+    }
+    .login-box .logo { font-size: 2rem; margin-bottom: 6px; }
+    .login-box h2 { font-size: 1.4rem; font-weight: 800; color: var(--dark); margin-bottom: 4px; }
+    .login-box p { font-size: .9rem; color: var(--gray); margin-bottom: 28px; }
+    .login-box input {
+      width: 100%; border: 1px solid #cbd5e1; border-radius: 10px;
+      padding: 12px 14px; font-size: 1rem; font-family: inherit;
+      outline: none; margin-bottom: 14px; background: #f8fafc;
+    }
+    .login-box input:focus { border-color: var(--blue); background: #fff; }
+    .login-box button {
+      width: 100%; background: var(--blue); color: #fff;
+      border: none; border-radius: 10px; padding: 13px;
+      font-size: 1rem; font-weight: 700; font-family: inherit;
+      cursor: pointer; transition: background .2s;
+    }
+    .login-box button:hover { background: var(--dark); }
+    .login-error {
+      display: none; margin-top: 12px;
+      background: #fee2e2; color: #991b1b;
+      padding: 10px; border-radius: 8px; font-size: .9rem;
+    }
+
+    /* ===== DASHBOARD ===== */
+    #dashboard { display: none; }
+
+    .topbar {
+      background: var(--dark); color: #fff;
+      padding: 0 28px; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .topbar-brand { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; font-weight: 700; }
+    .topbar-brand span { font-size: 1.4rem; }
+    .topbar-right { display: flex; align-items: center; gap: 16px; }
+    .topbar-right .badge-count {
+      background: var(--cyan); color: var(--dark);
+      padding: 3px 12px; border-radius: 999px; font-weight: 700; font-size: .85rem;
+    }
+    .btn-logout {
+      background: rgba(255,255,255,0.15); color: #fff;
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 6px 16px; border-radius: 8px; font-family: inherit;
+      cursor: pointer; font-size: .9rem; transition: background .2s;
+    }
+    .btn-logout:hover { background: rgba(255,255,255,0.25); }
+
+    .page-inner { max-width: 1200px; margin: 0 auto; padding: 32px 20px; }
+
+    /* Stats row */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 16px; margin-bottom: 28px;
+    }
+    @media (max-width: 700px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+
+    .stat-card {
+      background: #fff; border-radius: 14px; padding: 20px 22px;
+      box-shadow: var(--shadow); border-left: 4px solid var(--blue);
+    }
+    .stat-card.pending  { border-color: #f59e0b; }
+    .stat-card.progress { border-color: #3b82f6; }
+    .stat-card.resolved { border-color: #22c55e; }
+    .stat-card .num { font-size: 2rem; font-weight: 800; color: var(--dark); }
+    .stat-card .lbl { font-size: .85rem; color: var(--gray); font-weight: 600; margin-top: 2px; }
+
+    /* Controls */
+    .controls {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px; flex-wrap: wrap;
+    }
+    .controls input {
+      flex: 1; min-width: 200px; border: 1px solid #cbd5e1;
+      border-radius: 10px; padding: 10px 14px; font-size: .95rem;
+      font-family: inherit; outline: none; background: #fff;
+    }
+    .controls input:focus { border-color: var(--blue); }
+    .controls select {
+      border: 1px solid #cbd5e1; border-radius: 10px;
+      padding: 10px 14px; font-size: .95rem; font-family: inherit;
+      outline: none; background: #fff; cursor: pointer;
+    }
+    .btn-clear-all {
+      background: #fee2e2; color: #991b1b;
+      border: none; border-radius: 10px;
+      padding: 10px 18px; font-size: .9rem; font-weight: 600;
+      font-family: inherit; cursor: pointer; transition: background .2s;
+    }
+    .btn-clear-all:hover { background: #fca5a5; }
+
+    /* Table */
+    .table-wrap { overflow-x: auto; }
+    table {
+      width: 100%; border-collapse: collapse;
+      background: #fff; border-radius: 14px;
+      overflow: hidden; box-shadow: var(--shadow);
+    }
+    thead { background: var(--dark); color: #fff; }
+    thead th {
+      padding: 14px 16px; text-align: left;
+      font-size: .85rem; font-weight: 600; letter-spacing: .3px;
+      white-space: nowrap;
+    }
+    tbody tr { border-bottom: 1px solid #f1f5f9; transition: background .15s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #f8fafc; }
+    tbody td {
+      padding: 13px 16px; font-size: .88rem; color: #334155;
+      vertical-align: top;
+    }
+    .td-name { font-weight: 700; color: var(--dark); }
+    .td-phone a { color: var(--blue); text-decoration: none; }
+    .td-phone a:hover { text-decoration: underline; }
+    .td-date { white-space: nowrap; }
+    .td-desc { max-width: 180px; word-break: break-word; color: var(--gray); font-size: .83rem; }
+
+    /* Status badge */
+    .status-badge {
+      display: inline-block; padding: 3px 12px;
+      border-radius: 999px; font-size: .78rem; font-weight: 700; white-space: nowrap;
+    }
+    .status-Pending  { background: #fef3c7; color: #92400e; }
+    .status-InProgress { background: #dbeafe; color: #1e40af; }
+    .status-Resolved { background: #dcfce7; color: #166534; }
+
+    /* Action buttons */
+    .actions { display: flex; gap: 6px; flex-wrap: wrap; }
+    .btn-status {
+      border: none; border-radius: 7px; padding: 5px 11px;
+      font-size: .78rem; font-weight: 600; font-family: inherit;
+      cursor: pointer; transition: opacity .2s;
+    }
+    .btn-status:hover { opacity: .8; }
+    .btn-to-progress { background: #dbeafe; color: #1e40af; }
+    .btn-to-resolved { background: #dcfce7; color: #166534; }
+    .btn-to-pending  { background: #fef3c7; color: #92400e; }
+    .btn-delete { background: #fee2e2; color: #991b1b; }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center; padding: 64px 20px;
+      background: #fff; border-radius: 14px; box-shadow: var(--shadow);
+    }
+    .empty-state .empty-icon { font-size: 3rem; margin-bottom: 12px; }
+    .empty-state h3 { font-size: 1.2rem; color: var(--dark); margin-bottom: 6px; }
+    .empty-state p { font-size: .9rem; color: var(--gray); }
+    .empty-state a {
+      display: inline-block; margin-top: 18px;
+      background: var(--blue); color: #fff;
+      padding: 11px 24px; border-radius: 10px;
+      font-weight: 600; text-decoration: none; font-size: .95rem;
+    }
+
+    .back-link {
+      display: inline-block; margin-top: 24px;
+      color: var(--blue); font-size: .9rem; text-decoration: none;
+    }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <!-- ===== LOGIN GATE ===== -->
+  <div id="loginGate">
+    <div class="login-box">
+      <div class="logo">💧</div>
+      <h2>Sun Ro Systems</h2>
+      <p>Admin Panel — Service Requests</p>
+      <input type="password" id="adminPass" placeholder="Enter admin password" onkeydown="if(event.key==='Enter') doLogin()" />
+      <button onclick="doLogin()">Login</button>
+      <div class="login-error" id="loginError">Incorrect password. Please try again.</div>
+    </div>
+  </div>
+
+  <!-- ===== DASHBOARD ===== -->
+  <div id="dashboard">
+    <div class="topbar">
+      <div class="topbar-brand">
+        <span>💧</span> Sun Ro Systems — Admin
+      </div>
+      <div class="topbar-right">
+        <span class="badge-count" id="totalCount">0 Requests</span>
+        <button class="btn-logout" onclick="doLogout()">Logout</button>
+      </div>
+    </div>
+
+    <div class="page-inner">
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="num" id="statTotal">0</div>
+          <div class="lbl">Total Requests</div>
+        </div>
+        <div class="stat-card pending">
+          <div class="num" id="statPending">0</div>
+          <div class="lbl">Pending</div>
+        </div>
+        <div class="stat-card progress">
+          <div class="num" id="statProgress">0</div>
+          <div class="lbl">In Progress</div>
+        </div>
+        <div class="stat-card resolved">
+          <div class="num" id="statResolved">0</div>
+          <div class="lbl">Resolved</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <input type="text" id="searchBox" placeholder="Search by name, phone, address..." oninput="renderTable()" />
+        <select id="filterStatus" onchange="renderTable()">
+          <option value="">All Statuses</option>
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Resolved">Resolved</option>
+        </select>
+        <button class="btn-clear-all" onclick="clearAll()">🗑 Clear All</button>
+      </div>
+
+      <div class="table-wrap" id="tableWrap"></div>
+
+      <a href="index.html" class="back-link">← Back to Website</a>
+    </div>
+  </div>
+
+  <script>
+    const PASS = 'sunro@2025';
+    const KEY  = 'sunro_service_requests';
+
+    function doLogin() {
+      if (document.getElementById('adminPass').value === PASS) {
+        document.getElementById('loginGate').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        renderTable();
+      } else {
+        document.getElementById('loginError').style.display = 'block';
+      }
+    }
+
+    function doLogout() {
+      document.getElementById('loginGate').style.display = 'flex';
+      document.getElementById('dashboard').style.display = 'none';
+      document.getElementById('adminPass').value = '';
+      document.getElementById('loginError').style.display = 'none';
+    }
+
+    function getData() {
+      return JSON.parse(localStorage.getItem(KEY) || '[]');
+    }
+
+    function saveData(data) {
+      localStorage.setItem(KEY, JSON.stringify(data));
+    }
+
+    function updateStatus(id, newStatus) {
+      const data = getData().map(r => r.id === id ? { ...r, status: newStatus } : r);
+      saveData(data);
+      renderTable();
+    }
+
+    function deleteRequest(id) {
+      if (!confirm('Delete this service request?')) return;
+      saveData(getData().filter(r => r.id !== id));
+      renderTable();
+    }
+
+    function clearAll() {
+      if (!confirm('Delete ALL service requests? This cannot be undone.')) return;
+      localStorage.removeItem(KEY);
+      renderTable();
+    }
+
+    function renderTable() {
+      const search = document.getElementById('searchBox').value.toLowerCase();
+      const filterStatus = document.getElementById('filterStatus').value;
+      const all = getData();
+
+      // Stats
+      document.getElementById('statTotal').textContent   = all.length;
+      document.getElementById('statPending').textContent  = all.filter(r => r.status === 'Pending').length;
+      document.getElementById('statProgress').textContent = all.filter(r => r.status === 'In Progress').length;
+      document.getElementById('statResolved').textContent = all.filter(r => r.status === 'Resolved').length;
+      document.getElementById('totalCount').textContent   = all.length + ' Request' + (all.length !== 1 ? 's' : '');
+
+      const filtered = all.filter(r => {
+        const matchSearch = !search ||
+          r.name.toLowerCase().includes(search) ||
+          r.phone.includes(search) ||
+          r.address.toLowerCase().includes(search) ||
+          r.problemType.toLowerCase().includes(search);
+        const matchStatus = !filterStatus || r.status === filterStatus;
+        return matchSearch && matchStatus;
+      });
+
+      const wrap = document.getElementById('tableWrap');
+
+      if (filtered.length === 0) {
+        wrap.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">📋</div>
+            <h3>${all.length === 0 ? 'No service requests yet' : 'No results found'}</h3>
+            <p>${all.length === 0 ? 'When customers submit a service request it will appear here.' : 'Try adjusting your search or filter.'}</p>
+            ${all.length === 0 ? '<a href="index.html#service">Go to Service Form</a>' : ''}
+          </div>`;
+        return;
+      }
+
+      const statusClass = s => s === 'In Progress' ? 'status-InProgress' : 'status-' + s;
+      const nextBtns = r => {
+        const btns = [];
+        if (r.status !== 'In Progress') btns.push(`<button class="btn-status btn-to-progress" onclick="updateStatus(${r.id}, 'In Progress')">In Progress</button>`);
+        if (r.status !== 'Resolved')    btns.push(`<button class="btn-status btn-to-resolved" onclick="updateStatus(${r.id}, 'Resolved')">Resolved</button>`);
+        if (r.status !== 'Pending')     btns.push(`<button class="btn-status btn-to-pending"  onclick="updateStatus(${r.id}, 'Pending')">Pending</button>`);
+        btns.push(`<button class="btn-status btn-delete" onclick="deleteRequest(${r.id})">Delete</button>`);
+        return btns.join('');
+      };
+
+      wrap.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Submitted</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Address</th>
+              <th>Machine</th>
+              <th>Problem</th>
+              <th>Pref. Date</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${filtered.map((r, i) => `
+              <tr>
+                <td>${i + 1}</td>
+                <td class="td-date">${r.submittedAt}</td>
+                <td class="td-name">${escHtml(r.name)}<br/><small style="color:var(--gray);font-weight:400">${escHtml(r.email)}</small></td>
+                <td class="td-phone"><a href="tel:${r.phone}">${escHtml(r.phone)}</a></td>
+                <td>${escHtml(r.address)}</td>
+                <td>${escHtml(r.machineType)}<br/><small style="color:var(--gray)">${escHtml(r.model)}</small></td>
+                <td>${escHtml(r.problemType)}</td>
+                <td class="td-date">${r.preferredDate || '—'}</td>
+                <td class="td-desc">${escHtml(r.description)}</td>
+                <td><span class="status-badge ${statusClass(r.status)}">${r.status}</span></td>
+                <td><div class="actions">${nextBtns(r)}</div></td>
+              </tr>`).join('')}
+          </tbody>
+        </table>`;
+    }
+
+    function escHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+  </script>
+</body>
+</html>
