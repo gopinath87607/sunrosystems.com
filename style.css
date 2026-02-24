@@ -234,6 +234,25 @@ body {
 }
 .btn-card:hover { background: var(--dark); }
 
+.product-tag {
+  display: inline-block;
+  background: #e0f2fe; color: var(--blue);
+  font-size: .72rem; font-weight: 700; letter-spacing: .03em;
+  padding: 4px 12px; border-radius: 999px;
+  margin-bottom: 14px;
+}
+
+.price-tag {
+  text-align: center;
+  font-size: .9rem; font-weight: 600;
+  color: var(--blue);
+  background: #f0f9ff;
+  border: 1.5px dashed var(--blue);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+}
+
 /* ===== WHY US ===== */
 .why-us { padding: 90px 0; background: var(--pale); }
 
